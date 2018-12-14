@@ -1,6 +1,6 @@
 package com.github.nidorx.jia.ga;
 
-import com.github.nidorx.jia.util.Util;
+import com.github.nidorx.jia.util.JiaUtils;
 import static com.github.nidorx.jia.ga.Chromosome.addLayer;
 import static com.github.nidorx.jia.ga.Chromosome.changeLayerSize;
 import static com.github.nidorx.jia.ga.Chromosome.countLayers;
@@ -39,11 +39,11 @@ public class Mutation {
 
         double[] dnaNew = parent.forEachNeuron(neuron -> {
             // Alteração aleatoria de todos os  <BIAS> e <WEIGHT>
-            neuron.bias = Util.coin(PM) ? hard(neuron.bias) : soft(neuron.bias);
+            neuron.bias = JiaUtils.coin(PM) ? hard(neuron.bias) : soft(neuron.bias);
 
             // Mutação aleatória nos pesos
             for (int i = 0, l = neuron.weights.length; i < l; i++) {
-                neuron.weights[i] = Util.coin(PM) ? hard(neuron.weights[i]) : soft(neuron.weights[i]);
+                neuron.weights[i] = JiaUtils.coin(PM) ? hard(neuron.weights[i]) : soft(neuron.weights[i]);
             }
             return true;
         });
@@ -55,12 +55,12 @@ public class Mutation {
         // Ignora camada de saída
         for (int i = 0, l = layers.length - 1; i < l; i++) {
             // Altera a quantidade de neurons da camada?
-            if (!Util.coin(PM)) {
+            if (!JiaUtils.coin(PM)) {
                 continue;
             }
 
             int size = layers[i];
-            int newSize = Util.between(size / 2, size + size / 2);
+            int newSize = JiaUtils.between(size / 2, size + size / 2);
             if (size != newSize) {
                 dnaNew = changeLayerSize(dnaNew, i, newSize);
             }
@@ -73,13 +73,13 @@ public class Mutation {
         for (int i = 1, idxActual = i, sizeActual = layers.length, l = layers.length - 1; i < l; i++, idxActual++) {
             // Adiciona ou remove camada?
 
-            if (Util.coin(PM)) {
+            if (JiaUtils.coin(PM)) {
                 // Adiciona
 
                 // Aleatório entre a metade da menor e dobro da maior camada (ATUAL E SEGUINTE)
                 int min = Math.min(layers[i], layers[i + 1]);
                 int max = Math.max(layers[i], layers[i + 1]);
-                int size = Util.between(min / 2, max + max / 2);
+                int size = JiaUtils.between(min / 2, max + max / 2);
 
                 dnaNew = addLayer(dnaNew, idxActual, size);
 
@@ -88,7 +88,7 @@ public class Mutation {
                 break;
             }
 
-            if (Util.coin(PM)) {
+            if (JiaUtils.coin(PM)) {
                 // Remove
                 if (sizeActual < 2) {
                     // Deve existir no mínimo um Hidden e o Output Layer
@@ -110,7 +110,7 @@ public class Mutation {
      * @return
      */
     public static double soft(double input) {
-        return Util.coin(PM) ? Util.between(input * .85, input * 1.15) : input;
+        return JiaUtils.coin(PM) ? JiaUtils.between(input * .85, input * 1.15) : input;
     }
 
     /**
@@ -121,7 +121,7 @@ public class Mutation {
      * @return
      */
     public static double hard(double input) {
-        return Util.coin(PM) ? Util.between(input * .6, input * 1.4) : input;
+        return JiaUtils.coin(PM) ? JiaUtils.between(input * .6, input * 1.4) : input;
     }
 
 }

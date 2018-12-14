@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Alex Rodin <contato@alexrodin.info>
  */
-public class Util {
+public class JiaUtils {
 
     public static int between(int min, int max) {
         if (min > max) {
@@ -23,6 +23,17 @@ public class Util {
             throw new IllegalArgumentException("max must be greater than min");
         }
         return (min + Math.random() * (max - min));
+    }
+
+    /**
+     * Cálculo do delta percentual (método 1) https://sciencing.com/calculate-delta-percentage-8475192.html
+     *
+     * @param xInitial
+     * @param xFinal
+     * @return
+     */
+    public static double delta(double xInitial, double xFinal) {
+        return (xFinal - xInitial) / xInitial * 100;
     }
 
     /**

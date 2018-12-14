@@ -7,7 +7,7 @@ import com.github.nidorx.jia.ga.storage.Info;
 import com.github.nidorx.jia.ga.storage.Storage;
 import com.github.nidorx.jia.util.Callback;
 import com.github.nidorx.jia.util.MultiException;
-import com.github.nidorx.jia.util.Util;
+import com.github.nidorx.jia.util.JiaUtils;
 import com.github.nidorx.jia.mlp.Input;
 import com.github.nidorx.jia.mlp.Network;
 import com.github.nidorx.jia.mlp.Output;
@@ -131,7 +131,7 @@ public abstract class Algorithm {
      * @return
      */
     public int getPopulationSize() {
-        return 30;
+        return 50;
     }
 
     /**
@@ -201,8 +201,8 @@ public abstract class Algorithm {
         // -------------------------------
         // efetuar 6 ou 20% cruzamento de pais aleatórios
         for (int i = 0, j = selection.size() - 1, k = (int) Math.max(4, selectionSize * 0.2); i < k; i++) {
-            final Individual dad = selection.get(Util.between(0, j));
-            final Individual mom = selection.get(Util.between(0, j));
+            final Individual dad = selection.get(JiaUtils.between(0, j));
+            final Individual mom = selection.get(JiaUtils.between(0, j));
             selection.add(new Individual(Crossover.random(dad.chromosome, mom.chromosome), inputNames, outputNames));
         }
 
@@ -219,7 +219,7 @@ public abstract class Algorithm {
 
         // Até obter o tamanho esperado, adiciona individuos mutantes na população
         while (selection.size() < selectionSize) {
-            final Individual individual = selection.get(Util.between(0, selection.size() - 1));
+            final Individual individual = selection.get(JiaUtils.between(0, selection.size() - 1));
             selection.add(new Individual(Mutation.mutate(individual.chromosome), inputNames, outputNames));
         }
 
@@ -362,11 +362,10 @@ public abstract class Algorithm {
 
                         } else {
 
-                            LOG.log(Level.INFO, String.format(
-                                    "Indivíduo do GA executado com sucesso: %s | fitness %.10f | tempo %s",
+                            LOG.log(Level.INFO, String.format("Indivíduo do GA executado com sucesso: %s | fitness %.10f | tempo %s",
                                     updated,
                                     updated.getFitness(),
-                                    Util.time(updated.getEnd() - updated.getStart())
+                                    JiaUtils.time(updated.getEnd() - updated.getStart())
                             ));
                         }
 
@@ -398,7 +397,7 @@ public abstract class Algorithm {
             } catch (Exception ex) {
                 System.out.println("Erro inesperado ao persistir os dados da geração testada");
                 ex.printStackTrace();
-            }
+            } 
 
             if (state.equals(State.STOPPING)) {
                 // Informar sobre a solicitação de parada de execução
@@ -430,7 +429,6 @@ public abstract class Algorithm {
             Individual individual = population.individuals[i];
             dnas[i] = individual.chromosome.getDna();
             fitness[i] = individual.getFitness() == null ? Double.NEGATIVE_INFINITY : individual.getFitness();
-
         }
 
         this.getStorage().save(new Info(population.generation, dnas, fitness));
@@ -440,6 +438,7 @@ public abstract class Algorithm {
      * Executa a rede neural de um cromossomo, retornando a informação do indivíduo
      *
      * @param chromosome
+     * @return 
      */
     public Individual execute(Chromosome chromosome) {
         final Individual individual = new Individual(chromosome, getInputNames(), getOutputNames());

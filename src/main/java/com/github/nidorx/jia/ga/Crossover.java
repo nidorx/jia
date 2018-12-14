@@ -1,7 +1,7 @@
 package com.github.nidorx.jia.ga;
 
 import com.github.nidorx.jia.ga.decoder.DecoderDnaList;
-import com.github.nidorx.jia.util.Util;
+import com.github.nidorx.jia.util.JiaUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class Crossover {
     public static Chromosome random(Chromosome dad, Chromosome mom) {
         // int algorithm = Util.between(1, 4);
         // Somente singlePoint e twoPoints estão implementados
-        int algorithm = Util.between(1, 2);
+        int algorithm = JiaUtils.between(1, 2);
         switch (algorithm) {
             case 1:
                 return singlePoint(dad, mom);
@@ -64,7 +64,7 @@ public class Crossover {
 
         // Escolhe o ponto de corte (um layer)
         final int ltLayers = Math.min(dadLayers, momLayers);
-        int idxLayer = (int) Util.between(ltLayers * .30, ltLayers * 0.70);
+        int idxLayer = (int) JiaUtils.between(ltLayers * .30, ltLayers * 0.70);
         if (idxLayer == ltLayers) {
             idxLayer = ltLayers / 2;
         }
@@ -108,7 +108,7 @@ public class Crossover {
 
         List<List<List<Double>>> initData;
         List<List<List<Double>>> midData;
-        if (Util.coin()) {
+        if (JiaUtils.coin()) {
             // Pai no inicio e fim
             initData = dadData;
             midData = momData;
@@ -118,11 +118,11 @@ public class Crossover {
             midData = dadData;
         }
 
-        int idxInitOne = Math.max((int) Util.between(initData.size() * .20, initData.size() * 0.50), 1);
-        int idxInitTwo = Math.min((int) Util.between(initData.size() * .50, initData.size() * 0.80), initData.size() - 1);
+        int idxInitOne = Math.max((int) JiaUtils.between(initData.size() * .20, initData.size() * 0.50), 1);
+        int idxInitTwo = Math.min((int) JiaUtils.between(initData.size() * .50, initData.size() * 0.80), initData.size() - 1);
 
-        int idxMidStart = (int) Util.between(0, midData.size() * 0.40);
-        int idxMidEnd = (int) Util.between(midData.size() * .60, midData.size());
+        int idxMidStart = (int) JiaUtils.between(0, midData.size() * 0.40);
+        int idxMidEnd = (int) JiaUtils.between(midData.size() * .60, midData.size());
 
         for (int i = 0; i < idxInitOne; i++) {
             outData.add(initData.get(i));

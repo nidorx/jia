@@ -1,6 +1,6 @@
 package com.github.nidorx.jia.mlp;
 
-import com.github.nidorx.jia.util.Util;
+import com.github.nidorx.jia.util.JiaUtils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +54,7 @@ public class Input {
      * @return
      */
     public Output set(double[] input, double currentMin, double currentMax) {
-        return set(Arrays.stream(input).map(d -> Util.remap(d, currentMin, currentMax)).toArray());
+        return set(Arrays.stream(input).map(d -> JiaUtils.remap(d, currentMin, currentMax)).toArray());
     }
 
     /**
@@ -78,7 +78,7 @@ public class Input {
      * @return
      */
     public Output set(List<Double> input, double currentMin, double currentMax) {
-        return set(input.stream().mapToDouble(d -> Util.remap(d, currentMin, currentMax)).toArray());
+        return set(input.stream().mapToDouble(d -> JiaUtils.remap(d, currentMin, currentMax)).toArray());
     }
 
     /**
@@ -102,7 +102,7 @@ public class Input {
      * @return
      */
     public Output set(Map<String, Double> input, double currentMin, double currentMax) {
-        return set(names.stream().mapToDouble(name -> Util.remap(input.get(name), currentMin, currentMax)).toArray());
+        return set(names.stream().mapToDouble(name -> JiaUtils.remap(input.get(name), currentMin, currentMax)).toArray());
     }
 
     /**
@@ -123,7 +123,7 @@ public class Input {
      * @return
      */
     public double[] get(double targetMin, double targetMax) {
-        return Arrays.stream(values).map(d -> Util.unremap(d, targetMin, targetMax)).toArray();
+        return Arrays.stream(values).map(d -> JiaUtils.unremap(d, targetMin, targetMax)).toArray();
     }
 
 }

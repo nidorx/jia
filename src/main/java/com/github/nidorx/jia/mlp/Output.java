@@ -1,6 +1,6 @@
 package com.github.nidorx.jia.mlp;
 
-import com.github.nidorx.jia.util.Util;
+import com.github.nidorx.jia.util.JiaUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -51,7 +51,7 @@ public class Output {
     public Map<String, Double> asMap(double targetMin, double targetMax) {
         final Map<String, Double> out = new HashMap<>();
         names.forEach(name -> {
-            out.put(name, Util.unremap(this.layer.neurons[names.indexOf(name)].output, targetMin, targetMax));
+            out.put(name, JiaUtils.unremap(this.layer.neurons[names.indexOf(name)].output, targetMin, targetMax));
         });
         return out;
     }
@@ -77,7 +77,7 @@ public class Output {
      */
     public double[] asArray(double targetMin, double targetMax) {
         return Arrays.asList(this.layer.neurons).stream()
-                .mapToDouble(neuron -> Util.unremap(neuron.output, targetMin, targetMax))
+                .mapToDouble(neuron -> JiaUtils.unremap(neuron.output, targetMin, targetMax))
                 .toArray();
     }
 
@@ -102,7 +102,7 @@ public class Output {
      */
     public List<Double> asList(double targetMin, double targetMax) {
         return Arrays.asList(this.layer.neurons).stream()
-                .map(neuron -> Util.unremap(neuron.output, targetMin, targetMax))
+                .map(neuron -> JiaUtils.unremap(neuron.output, targetMin, targetMax))
                 .collect(Collectors.toList());
     }
 
@@ -141,7 +141,7 @@ public class Output {
         network.each((lr, li) -> {
             double[] neurons = new double[lr.size];
             lr.each((neu, ni) -> {
-                neurons[ni] = Util.unremap(neu.output, targetMin, targetMax);
+                neurons[ni] = JiaUtils.unremap(neu.output, targetMin, targetMax);
             });
             layers.add(neurons);
         });

@@ -1,6 +1,6 @@
 package com.github.nidorx.jia.mlp;
 
-import com.github.nidorx.jia.util.Util;
+import com.github.nidorx.jia.util.JiaUtils;
 import java.util.Arrays;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
@@ -117,7 +117,7 @@ public class NetworkTest {
         double min = 1;
         double max = 20;
         for (int i = 0, l = values.length; i < l; i++) {
-            values[i] = Util.remap(values[i], min, max);
+            values[i] = JiaUtils.remap(values[i], min, max);
         }
 
         final double dataset[][] = new double[values.length / 2][values[0].length];

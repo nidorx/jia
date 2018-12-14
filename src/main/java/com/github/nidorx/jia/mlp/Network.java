@@ -1,6 +1,6 @@
 package com.github.nidorx.jia.mlp;
 
-import com.github.nidorx.jia.util.Util;
+import com.github.nidorx.jia.util.JiaUtils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -276,7 +276,7 @@ public class Network {
                 // Atingiu a percentagem de acerto mínimo definida
                 long end = System.currentTimeMillis();
                 System.out.println("-----------------------------------------------------------");
-                System.out.println(String.format("Treinamento finalizado em %s ", Util.time(end - start)));
+                System.out.println(String.format("Treinamento finalizado em %s ", JiaUtils.time(end - start)));
                 System.out.println(String.format("epoch: %d, error: %.5f", epoch, errorTotal));
                 System.out.println("-----------------------------------------------------------");
                 return;

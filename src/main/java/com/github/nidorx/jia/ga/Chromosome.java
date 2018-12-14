@@ -1,6 +1,6 @@
 package com.github.nidorx.jia.ga;
 
-import com.github.nidorx.jia.util.Util;
+import com.github.nidorx.jia.util.JiaUtils;
 import com.github.nidorx.jia.mlp.Transfer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -310,10 +310,10 @@ public class Chromosome {
                     for (int c = 0, d = diff; c < d; c++) {
                         // <TYPE>, <BIAS>
                         newLayer.add(Neuron.TYPE.random());
-                        newLayer.add(Util.between(BIAS_MIN, BIAS_MAX));
+                        newLayer.add(JiaUtils.between(BIAS_MIN, BIAS_MAX));
                         for (int e = 0; e < inputs; e++) {
                             // <WEIGHT>
-                            newLayer.add(Util.between(WEIGHT_MIN, WEIGHT_MAX));
+                            newLayer.add(JiaUtils.between(WEIGHT_MIN, WEIGHT_MAX));
                         }
                     }
                 } else {
@@ -408,10 +408,10 @@ public class Chromosome {
                 for (int c = 0; c < size; c++) {
                     // <TYPE>, <BIAS>
                     newLayer.add(Neuron.TYPE.random());
-                    newLayer.add(Util.between(BIAS_MIN, BIAS_MAX));
+                    newLayer.add(JiaUtils.between(BIAS_MIN, BIAS_MAX));
                     for (int e = 0; e < inputs; e++) {
                         // <WEIGHT>
-                        newLayer.add(Util.between(WEIGHT_MIN, WEIGHT_MAX));
+                        newLayer.add(JiaUtils.between(WEIGHT_MIN, WEIGHT_MAX));
                     }
                 }
 
@@ -473,7 +473,7 @@ public class Chromosome {
                 int diff = prevLayerNewSize - prevLayerOldSize;
                 for (int e = 0, f = diff; e < f; e++) {
                     // <WEIGHT>
-                    newLayer.add(Util.between(WEIGHT_MIN, WEIGHT_MAX));
+                    newLayer.add(JiaUtils.between(WEIGHT_MIN, WEIGHT_MAX));
                 }
             } else {
                 // Se a nova quantidade é menor, remove os respectivos pesos dos neuronios da camada seguinte
@@ -671,14 +671,14 @@ public class Chromosome {
      */
     public static Chromosome random(int inputs, int outputs) {
         // Número de layers
-        int numLayers = Util.between(1, 3);
+        int numLayers = JiaUtils.between(1, 3);
 
         // hidden + output
         int[] layers = new int[numLayers + 1];
 
         for (int i = 0; i < numLayers; i++) {
             // Numero de neuronios nos hidden layers está contido entre tamanho de entrada e saída+1 
-            layers[i] = Util.between(Math.min(inputs, outputs), Math.max(inputs, outputs) + 1);
+            layers[i] = JiaUtils.between(Math.min(inputs, outputs), Math.max(inputs, outputs) + 1);
         }
         // Output layer
         layers[numLayers] = outputs;
@@ -697,10 +697,10 @@ public class Chromosome {
                 // <TYPE>
                 dna.add(Neuron.TYPE.random());
                 // <BIAS>
-                dna.add(Util.between(BIAS_MIN, BIAS_MAX));
+                dna.add(JiaUtils.between(BIAS_MIN, BIAS_MAX));
                 for (int l = 0; l < weights; l++) {
                     // <WEIGHT>
-                    dna.add(Util.between(WEIGHT_MIN, WEIGHT_MAX));
+                    dna.add(JiaUtils.between(WEIGHT_MIN, WEIGHT_MAX));
                 }
             }
         }
@@ -735,7 +735,7 @@ public class Chromosome {
             }
 
             public static double random() {
-                return Util.between(1.0, 11.0);
+                return JiaUtils.between(1.0, 11.0);
             }
 
             public static TYPE getById(double id) {
